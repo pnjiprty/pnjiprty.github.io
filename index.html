@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panji — Programmer & IT Support</title>
+  <meta name="description" content="Portfolio of a Programmer & IT Support Specialist." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0c10;
+      --panel: #111218;
+      --text: #e7e9ee;
+      --muted:#aeb4c0;
+      --primary:#55c2ff;
+      --accent:#32d48a;
+      --border: #20232c;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --maxw: 1100px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg: #f7f8fb;
+        --panel: #ffffff;
+        --text: #0f1222;
+        --muted:#5b6070;
+        --primary:#2563eb;
+        --accent:#16a34a;
+        --border: #e8eaf2;
+        --shadow: 0 10px 30px rgba(16,24,40,.08);
+      }
+    }
+    [data-theme="light"]{
+      --bg: #f7f8fb; --panel:#fff; --text:#0f1222; --muted:#5b6070; --primary:#2563eb; --accent:#16a34a; --border:#e8eaf2; --shadow:0 10px 30px rgba(16,24,40,.08);
+    }
+    [data-theme="dark"]{
+      --bg:#0b0c10; --panel:#111218; --text:#e7e9ee; --muted:#aeb4c0; --primary:#55c2ff; --accent:#32d48a; --border:#20232c; --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text); background:linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--bg) 85%, black 15%));
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+    /* Nav */
+    .nav{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(8px);
+      background:color-mix(in oklab, var(--panel) 75%, transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; height:64px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px}
+    .brand .dot{width:10px;height:10px;border-radius:999px;background:var(--accent); box-shadow:0 0 0 4px color-mix(in oklab, var(--accent) 20%, transparent)}
+    .nav ul{display:flex; gap:14px; list-style:none; padding:0; margin:0}
+    .nav a.link{
+      padding:10px 12px; border-radius:10px; color:var(--muted); font-weight:600; font-size:14px;
+      transition:color .2s, background .2s, transform .1s;
+    }
+    .nav a.link:hover{color:var(--text); background:color-mix(in oklab, var(--panel) 85%, transparent)}
+    .nav a.link.active{color:var(--text); background:color-mix(in oklab, var(--primary) 18%, transparent)}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px;
+      border:1px solid var(--border); background:var(--panel); color:var(--text); font-weight:600; box-shadow:var(--shadow);
+    }
+    .btn.primary{background:linear-gradient(135deg, var(--primary), color-mix(in oklab, var(--primary) 60%, black 10%)); border:none; color:white}
+    .btn.ghost{background:transparent; box-shadow:none}
+    .btn:active{transform:translateY(1px)}
+    .hamburger{display:none; background:transparent; border:1px solid var(--border); border-radius:10px; padding:8px}
+    .hamburger span{display:block; width:22px; height:2px; background:var(--text); margin:5px 0}
+    .mobile-menu{display:none; padding:10px 0; border-bottom:1px solid var(--border)}
+    .mobile-menu a{display:block; padding:12px 10px; color:var(--muted)}
+    .theme-toggle{margin-left:10px}
+
+    /* Sections */
+    section{scroll-margin-top:80px; padding:20px 0}
+    .hero{
+      padding:25px 0 20px; position:relative; overflow:hidden;scroll-margin-top: 80px; 
+    }
+    .grid{display:grid; gap:28px}
+    .grid-2{grid-template-columns:1.2fr .8fr}
+    @media (max-width: 900px){ .grid-2{grid-template-columns:1fr} .hero{padding-top:100px} }
+    .panel{
+      background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:28px; box-shadow:var(--shadow);
+    }
+    .kicker{color:var(--primary); font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:12px}
+    .title{font-size:42px; line-height:1.1; margin:10px 0 14px}
+    .subtitle{color:var(--muted); font-size:18px}
+    .stack{display:flex; gap:12px; flex-wrap:wrap}
+    .pill{
+      padding:8px 12px; border:1px solid var(--border); border-radius:999px; font-weight:600; color:var(--muted); background:color-mix(in oklab, var(--panel) 85%, transparent);
+    }
+    .avatar{
+      width:100%; aspect-ratio:1/1; border-radius:18px; border:1px solid var(--border); background:
+        radial-gradient(80% 80% at 30% 20%, color-mix(in oklab, var(--primary) 18%, transparent), transparent),
+        url('https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+      box-shadow:var(--shadow);
+    }
+
+    /* Skills */
+    .skills{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    @media (max-width: 800px){ .skills{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 520px){ .skills{grid-template-columns:1fr} }
+    .skill{padding:18px; border:1px solid var(--border); border-radius:14px; background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, transparent), var(--panel))}
+    .skill h4{margin:0 0 6px}
+    .meter{height:8px; border-radius:999px; background:color-mix(in oklab, var(--panel) 70%, var(--border)); overflow:hidden}
+    .meter > i{display:block; height:100%; width:0; background:linear-gradient(90deg, var(--primary), var(--accent))}
+
+    /* Experience */
+    .timeline{display:grid; gap:16px; position:relative}
+    .item{display:grid; grid-template-columns:140px 1fr; gap:20px; align-items:start}
+    @media (max-width: 640px){ .item{grid-template-columns:1fr} }
+    .when{font-weight:700; color:var(--primary)}
+    .card{border:1px solid var(--border); border-radius:14px; padding:18px; background:var(--panel)}
+    .card h4{margin:0 0 6px}
+    .muted{color:var(--muted)}
+
+    /* Contact */
+    form{display:grid; gap:12px}
+    input, textarea{
+      width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--border);
+      background:color-mix(in oklab, var(--panel) 92%, transparent); color:var(--text); outline:none;
+    }
+    textarea{min-height:140px; resize:vertical}
+    footer{padding:40px 0; color:var(--muted); border-top:1px solid var(--border); text-align:center}
+
+    /* Small helpers */
+    .spacer{height:16px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;border:0;clip:rect(0,0,0,0);overflow:hidden;white-space:nowrap}
+
+    /* Timeline container */
+    .timeline {
+      position: relative;
+      margin-left: 40px; /* space for markers */
+      padding-left: 20px;
+      border-left: 3px solid var(--border);
+    }
+
+    /* Timeline item */
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+      display: flex;
+      gap: 20px;
+    }
+
+    /* Dot marker */
+    .timeline-marker {
+      position: absolute;
+      left: -30px; /* align with border line */
+      top: 0;
+      width: 16px;
+      height: 16px;
+      background: var(--primary);
+      border: 3px solid var(--panel);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 30%, transparent);
+    }
+
+    /* Timeline content */
+    .timeline-content {
+      flex: 1;
+    }
+
+    /* Year label */
+    .timeline-content .when {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    /* Card styling remains the same */
+    .timeline .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      background: var(--panel);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .timeline {
+        margin-left: 30px;
+        padding-left: 10px;
+      }
+      .timeline-marker {
+        left: -25px;
+      }
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 960px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,.25);
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .project-content {
+      padding: 18px;
+    }
+
+    .project-content h4 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .project-content p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" aria-label="Primary">
+    <div class="container nav-inner">
+      <a href="#home" class="brand" aria-label="Go to home">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Panji</span>
+        <span class="sr-only">Home</span>
+      </a>
+
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul id="desktopNav">
+        <li><a class="link" href="#home">Home</a></li>
+        <li><a class="link" href="#about">About Me</a></li>
+        <!-- <li><a class="link" href="#skills">Skills</a></li> -->
+        <li><a class="link" href="#experience">Experience</a></li>
+        <li><a class="link" href="#contact">Contact Me</a></li>
+        <li>
+          <button class="btn ghost theme-toggle" id="themeToggle" aria-label="Toggle theme">🌓</button>
+        </li>
+      </ul>
+    </div>
+    <div id="mobileMenu" class="mobile-menu container" hidden>
+      <a class="link" href="#home">Home</a>
+      <a class="link" href="#about">About Me</a>
+      <!-- <a class="link" href="#skills">Skills</a> -->
+      <a class="link" href="#experience">Experience</a>
+      <a class="link" href="#contact">Contact Me</a>
+      <div class="spacer"></div>
+      <button class="btn ghost theme-toggle" id="themeToggleMobile">🌓 Toggle Theme</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="hero">
+    <div class="container grid grid-2">
+      <div class="panel">
+        <div class="kicker">Programmer & IT Support</div>
+        <h1 class="title">Hi, I’m <span style="color:var(--primary)">Panji</span>.</h1>
+        <p class="subtitle">I build reliable software and keep systems running smoothly. I love turning complex tech problems into simple, elegant solutions.</p>
+        <div class="spacer"></div>
+        <div class="stack">
+          <a class="btn primary" href="#contact">Contact Me</a>
+          <a class="btn" href="assets/Panji-CV.pdf" download>Download CV</a>
+        </div>
+        <div class="spacer"></div>
+        <div class="stack">
+          <span class="pill">#Java</span>
+          <span class="pill">#PHP</span>
+          <span class="pill">#Linux</span>
+          <span class="pill">#Networking</span>
+          <span class="pill">#Helpdesk</span>
+          <span class="pill">#Automation</span>
+        </div>
+      </div>
+      <div class="avatar" role="img" aria-label="Profile image placeholder"></div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container grid">
+      <div class="panel">
+        <div class="kicker">About Me</div>
+        <h2 class="title" style="font-size:32px">A problem-solver with a service mindset</h2>
+        <p class="subtitle">With <strong>5+ years</strong> of combined programming and IT support experience, I’ve shipped internal tools, automated workflows, and kept teams productive. I’m comfortable across Windows & Linux, networks, and web stacks (Java, PHP, JS). I care about clarity, reliability, and documentation.</p>
+        <div class="spacer"></div>
+        <div class="stack">
+          <span class="pill">Client-first</span>
+          <span class="pill">Clean code</span>
+          <span class="pill">SLA-focused</span>
+          <span class="pill">Root-cause analysis</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <!-- <section id="skills">
+    <div class="container">
+      <div class="panel">
+        <div class="kicker">Skills</div>
+        <h2 class="title" style="font-size:32px">What I work with</h2>
+        <div class="skills" id="skillsGrid"> -->
+          <!-- Example Skill Cards -->
+          <!-- <div class="skill">
+            <h4>Java / Spring</h4>
+            <p class="muted">REST APIs, JPA, unit testing</p>
+            <div class="meter"><i style="width:82%"></i></div>
+          </div>
+          <div class="skill">
+            <h4>PHP / Laravel</h4>
+            <p class="muted">Blade, Eloquent, queues</p>
+            <div class="meter"><i style="width:78%"></i></div>
+          </div>
+          <div class="skill">
+            <h4>JavaScript</h4>
+            <p class="muted">ES6+, Node, tooling</p>
+            <div class="meter"><i style="width:75%"></i></div>
+          </div>
+          <div class="skill">
+            <h4>Linux & Shell</h4>
+            <p class="muted">Services, permissions, automation</p>
+            <div class="meter"><i style="width:86%"></i></div>
+          </div>
+          <div class="skill">
+            <h4>Networking</h4>
+            <p class="muted">TCP/IP, VLAN, DNS/DHCP</p>
+            <div class="meter"><i style="width:70%"></i></div>
+          </div>
+          <div class="skill">
+            <h4>IT Support</h4>
+            <p class="muted">Helpdesk, SLA, documentation</p>
+            <div class="meter"><i style="width:90%"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="panel">
+        <div class="kicker">Experience</div>
+        <h2 class="title" style="font-size:32px">Recent work & impact</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="when">2023 — Present</div>
+              <div class="card">
+                <h4>Software Engineer — <span class="muted">Acme Health</span></h4>
+                <p class="muted">
+                  Built internal patient-queue system with Java + MySQL, reducing average wait time by 18%.
+                  Implemented CI and monitoring, cutting incident MTTR by 30%.
+                </p>
+                <ul class="muted">
+                  <li>Designed REST API used by 4 internal apps</li>
+                  <li>Wrote playbooks & onboarding docs</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="when">2021 — 2023</div>
+              <div class="card">
+                <h4>IT Support Specialist — <span class="muted">Meditech Clinic</span></h4>
+                <p class="muted">
+                  Handled L1–L2 tickets (Windows/Linux), imaging, backups, and network troubleshooting.
+                  Achieved 95%+ SLA for 12 months running.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="when">2019 — 2021</div>
+              <div class="card">
+                <h4>Freelance Developer</h4>
+                <p class="muted">
+                  Delivered small business websites, inventory tools, and support retainers.
+                  Focus on clean UX and maintainability.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+        <a class="btn" href="#contact">Let’s work together</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="panel">
+        <div class="kicker">Projects</div>
+        <h2 class="title" style="font-size:32px">Things I've built</h2>
+
+        <div class="projects-grid">
+          <div class="project-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Hospital_icon.svg/1024px-Hospital_icon.svg.png" alt="Khanza SIMRS" />
+          <div class="project-content">
+            <h4>Khanza Hospital Management System (Customized)</h4>
+            <p class="muted">
+              Customized and optimized the open-source SIMRS Khanza system to improve performance, fix database structure issues, 
+              and add new modules for clinic workflow. Enhanced usability and maintenance for daily hospital operations.
+            </p>
+            <div class="stack">
+              <span class="pill">Java</span>
+              <span class="pill">MariaDB</span>
+              <span class="pill">PHP</span>
+              <span class="pill">Networking</span>
+            </div>
+            <div class="spacer"></div>
+            <a href="https://github.com/pnjiprty" class="btn primary" target="_blank">View on GitHub</a>
+          </div>
+        </div>
+
+
+          <div class="project-card">
+            <img src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=800" alt="Project preview" />
+            <div class="project-content">
+              <h4>Clinic Management System</h4>
+              <p class="muted">A web-based system for managing patient queues, appointments, and reports. Built with Java, MySQL, and Bootstrap.</p>
+              <div class="stack">
+                <span class="pill">Java</span>
+                <span class="pill">MySQL</span>
+                <span class="pill">Bootstrap</span>
+              </div>
+              <div class="spacer"></div>
+              <a href="#" class="btn primary" target="_blank">View Demo</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800" alt="Project preview" />
+            <div class="project-content">
+              <h4>Inventory Tracker</h4>
+              <p class="muted">An internal tool to manage stock levels, track supplier data, and generate exportable reports. Used daily in 3 branches.</p>
+              <div class="stack">
+                <span class="pill">PHP</span>
+                <span class="pill">Laravel</span>
+                <span class="pill">MariaDB</span>
+              </div>
+              <div class="spacer"></div>
+              <a href="#" class="btn primary" target="_blank">View Demo</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800" alt="Project preview" />
+            <div class="project-content">
+              <h4>Portfolio Website</h4>
+              <p class="muted">My personal portfolio website — fully responsive, smooth animations, and dark mode support.</p>
+              <div class="stack">
+                <span class="pill">HTML</span>
+                <span class="pill">CSS</span>
+                <span class="pill">JS</span>
+              </div>
+              <div class="spacer"></div>
+              <a href="#" class="btn primary" target="_blank">View Live</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="panel">
+        <div class="kicker">Contact Me</div>
+        <h2 class="title" style="font-size:32px">Tell me about your project</h2>
+        <div class="grid" style="grid-template-columns:1fr .8fr; gap:24px">
+          <form id="contactForm" aria-label="Contact form">
+            <label>
+              <span class="sr-only">Your Name</span>
+              <input type="text" name="name" placeholder="Your name" required>
+            </label>
+            <label>
+              <span class="sr-only">Your Email</span>
+              <input type="email" name="email" placeholder="Email address" required>
+            </label>
+            <label>
+              <span class="sr-only">Message</span>
+              <textarea name="message" placeholder="How can I help?" required></textarea>
+            </label>
+            <button class="btn primary" type="submit">Send Message</button>
+            <p id="formStatus" class="muted" role="status" aria-live="polite"></p>
+          </form>
+
+          <div>
+            <div class="card">
+              <h4>Direct</h4>
+              <p class="muted">Email: <a href="mailto:hello@panji.dev">hello@panji.dev</a><br>
+                Phone/WA: <a href="tel:+6281234567890">+62 812-3456-7890</a><br>
+                Location: Indonesia (WIB)</p>
+            </div>
+            <div class="spacer"></div>
+            <div class="card">
+              <h4>Social</h4>
+              <p class="muted">
+                <a href="#" aria-label="GitHub">GitHub</a> ·
+                <a href="#" aria-label="LinkedIn">LinkedIn</a> ·
+                <a href="#" aria-label="Twitter/X">X</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Panji. All rights reserved.
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.hasAttribute('hidden') ? false : true;
+      hamburger.setAttribute('aria-expanded', String(!isOpen));
+      if(isOpen){ mobileMenu.setAttribute('hidden',''); mobileMenu.style.display='none'; }
+      else { mobileMenu.removeAttribute('hidden'); mobileMenu.style.display='block'; }
+    });
+    mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=> {
+      mobileMenu.setAttribute('hidden',''); mobileMenu.style.display='none';
+      hamburger.setAttribute('aria-expanded','false');
+    }));
+
+    // Smooth active link highlight via IntersectionObserver
+    const sections = ['home','about','skills','experience','contact'].map(id=>document.getElementById(id));
+    const navLinks = Array.from(document.querySelectorAll('.nav a.link'));
+    const setActive = (id) => {
+      navLinks.forEach(l=>{
+        const target = l.getAttribute('href').replace('#','');
+        l.classList.toggle('active', target===id);
+      });
+    };
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ setActive(e.target.id); }
+      });
+    }, { rootMargin: '-50% 0px -50% 0px', threshold: 0.01 });
+    sections.forEach(s => io.observe(s));
+
+    // Fake form submit (demo)
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      status.textContent = 'Sending...';
+      setTimeout(()=>{
+        status.textContent = 'Thanks! Your message has been sent (demo).';
+        form.reset();
+      }, 800);
+    });
+
+    // Theme toggle (persist in localStorage)
+    const applyTheme = (mode) => {
+      document.documentElement.setAttribute('data-theme', mode);
+      localStorage.setItem('theme', mode);
+    };
+    const saved = localStorage.getItem('theme');
+    if(saved){ applyTheme(saved); }
+    document.getElementById('themeToggle').addEventListener('click', ()=> {
+      const cur = document.documentElement.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light');
+      applyTheme(cur === 'dark' ? 'light' : 'dark');
+    });
+    document.getElementById('themeToggleMobile').addEventListener('click', ()=> {
+      const cur = document.documentElement.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light');
+      applyTheme(cur === 'dark' ? 'light' : 'dark');
+    });
+
+    // Animate skill meters on first view
+    const meters = document.querySelectorAll('.meter > i');
+    const mo = new IntersectionObserver((entries, obs)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const el = e.target;
+          const w = getComputedStyle(el).width; // target width from style
+          el.style.width = '0';
+          el.style.transition = 'width 900ms ease';
+          requestAnimationFrame(()=> el.style.width = w);
+          obs.unobserve(el);
+        }
+      });
+    }, {threshold: 0.4});
+    meters.forEach(m=>mo.observe(m));
+  </script>
+</body>
+</html>
