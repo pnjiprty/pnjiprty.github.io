@@ -57,9 +57,9 @@
     .nav-inner{display:flex; align-items:center; justify-content:space-between; height:64px}
     .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px}
     .brand .dot{width:10px;height:10px;border-radius:999px;background:var(--accent); box-shadow:0 0 0 4px color-mix(in oklab, var(--accent) 20%, transparent)}
-    .nav ul{display:flex; gap:14px; list-style:none; padding:0; margin:0}
+    .nav ul{display:flex; align-items:center; justify-content:space-between; gap:14px; list-style:none; padding:0; margin:0}
     .nav a.link{
-      padding:10px 12px; border-radius:10px; color:var(--muted); font-weight:600; font-size:14px;
+      padding:10px; border-radius:10px; color:var(--muted); font-weight:600; font-size:14px;
       transition:color .2s, background .2s, transform .1s;
     }
     .nav a.link:hover{color:var(--text); background:color-mix(in oklab, var(--panel) 85%, transparent)}
@@ -98,7 +98,7 @@
     .avatar{
       width:100%; aspect-ratio:1/1; border-radius:18px; border:1px solid var(--border); background:
         radial-gradient(80% 80% at 30% 20%, color-mix(in oklab, var(--primary) 18%, transparent), transparent),
-        url('https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+        url('./assets/photo.jpeg') center/cover no-repeat;
       box-shadow:var(--shadow);
     }
 
@@ -144,7 +144,7 @@
     /* Timeline item */
     .timeline-item {
       position: relative;
-      margin-bottom: 40px;
+      margin-bottom: 5px;
       display: flex;
       gap: 20px;
     }
@@ -248,6 +248,110 @@
       margin: 0 0 10px;
     }
 
+    /* === RESPONSIVE DESIGN FIXES === */
+
+  /* Small screens (tablets and large phones) */
+  @media (max-width: 960px) {
+    .grid-2 {
+      grid-template-columns: 1fr;
+    }
+
+    .hero {
+      padding-top: 20px;
+      text-align: center;
+    }
+
+    .hero .stack {
+      justify-content: center;
+    }
+
+    .avatar {
+      max-width: 280px;
+      margin: 20px auto 0;
+    }
+
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .timeline {
+      margin-left: 20px;
+    }
+
+    .timeline-marker {
+      left: -25px;
+    }
+  }
+
+  /* Mobile phones */
+  @media (max-width: 640px) {
+    .nav-inner {
+      flex-wrap: wrap;
+    }
+
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .skills {
+      grid-template-columns: 1fr;
+    }
+
+    .stack {
+      justify-content: center;
+    }
+
+    .timeline {
+      border-left-width: 2px;
+      margin-left: 16px;
+      padding-left: 10px;
+    }
+
+    .timeline-marker {
+      left: -20px;
+      width: 14px;
+      height: 14px;
+    }
+
+    section {
+      padding: 60px 0;
+    }
+
+    .title {
+      font-size: 28px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+    }
+
+    .nav ul {
+      display: none;
+    }
+  }
+
+  /* Very small phones */
+  @media (max-width: 400px) {
+    .btn {
+      font-size: 14px;
+      padding: 10px 12px;
+    }
+
+    .pill {
+      font-size: 13px;
+      padding: 6px 10px;
+    }
+
+    .title {
+      font-size: 24px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+    }
+  }
+
+
   </style>
 </head>
 <body>
@@ -265,10 +369,11 @@
       </button>
 
       <ul id="desktopNav">
-        <li><a class="link" href="#home">Home</a></li>
-        <li><a class="link" href="#about">About Me</a></li>
+        <li><a class="link" href="#home">About Me</a></li>
+        <!-- <li><a class="link" href="#about">About Me</a></li> -->
         <!-- <li><a class="link" href="#skills">Skills</a></li> -->
-        <li><a class="link" href="#experience">Experience</a></li>
+        <li><a class="link" href="#experience">Experiences</a></li>
+        <li><a class="link" href="#project">Projects</a></li>
         <li><a class="link" href="#contact">Contact Me</a></li>
         <li>
           <button class="btn ghost theme-toggle" id="themeToggle" aria-label="Toggle theme">🌓</button>
@@ -276,10 +381,11 @@
       </ul>
     </div>
     <div id="mobileMenu" class="mobile-menu container" hidden>
-      <a class="link" href="#home">Home</a>
-      <a class="link" href="#about">About Me</a>
+      <a class="link" href="#home">About Me</a>
+      <!-- <a class="link" href="#about">About Me</a> -->
       <!-- <a class="link" href="#skills">Skills</a> -->
-      <a class="link" href="#experience">Experience</a>
+      <a class="link" href="#experience">Experiences</a>
+      <a class="link" href="#project">Experiences</a>
       <a class="link" href="#contact">Contact Me</a>
       <div class="spacer"></div>
       <button class="btn ghost theme-toggle" id="themeToggleMobile">🌓 Toggle Theme</button>
@@ -434,7 +540,7 @@
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects">
+  <section id="project">
     <div class="container">
       <div class="panel">
         <div class="kicker">Projects</div>
@@ -580,20 +686,28 @@
     }));
 
     // Smooth active link highlight via IntersectionObserver
-    const sections = ['home','about','skills','experience','contact'].map(id=>document.getElementById(id));
+    const sectionIds = ['home','experience','project','contact'];
+    const sections = sectionIds.map(id=>document.getElementById(id)).filter(Boolean);
     const navLinks = Array.from(document.querySelectorAll('.nav a.link'));
+
     const setActive = (id) => {
       navLinks.forEach(l=>{
         const target = l.getAttribute('href').replace('#','');
         l.classList.toggle('active', target===id);
       });
     };
+
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
-        if(e.isIntersecting){ setActive(e.target.id); }
+        if (e.isIntersecting) setActive(e.target.id);
       });
-    }, { rootMargin: '-50% 0px -50% 0px', threshold: 0.01 });
+    }, { rootMargin: '-35% 0px -35% 0px',  threshold: 0.2  });
+
     sections.forEach(s => io.observe(s));
+
+    // optional: default highlight
+    setActive('home');
+
 
     // Fake form submit (demo)
     const form = document.getElementById('contactForm');
